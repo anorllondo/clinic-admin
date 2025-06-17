@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>medcare</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="shortcut icon" href="/images/heartbeat-solid.svg" type="image/x-icon"> 
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><i class="fas fa-heartbeat"></i> medcare.</a>
+    <nav class="navbar">
+      <a href="/doctors">Врачи</a>
+      <a href="/patients">Пациенты</a>
+      <a href="/diseases">Болезни</a>
+      <a href="/journals">Журнал посещений</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </header>
+
+  <section>
+    <div class="add-mode">
+      <a href="/journals/new" class="btn">Добавить визит <span class="fas fa-plus"></span></a>
+    </div>
+
+    <div class="content-center-wrapper">
+      <div class="section-header">
+        <div class="search-form">
+          <input type="text" id="search" list="patientNames" placeholder="Поиск по имени пациента" oninput="filterJournals()">
+          <datalist id="patientNames">
+            <% journals.forEach(journal => { %>
+              <option value="<%= journal.patient_id.name %>">
+            <% }) %>
+          </datalist>
+        </div>
+      </div>
+
+      <ul>
+        <% journals.forEach(journal => { %>
+          <li class="journal-card" data-name="<%= journal.patient_id.name.toLowerCase() %>">
+            <div class="journal-name">
+              <i class="fas fa-notes-medical icon"></i>
+              <%= journal.patient_id.name %>
+            </div>
+            <p><strong>Врач:</strong> <%= journal.doctor_id.name %></p>
+            <p><strong>Диагноз:</strong> <%= journal.disease_id.name %></p>
+            <p><strong>Дата:</strong> <%= journal.date.toISOString().split('T')[0] %></p>
+            <p><strong>Заметки:</strong> <%= journal.notes %></p>
+            <div class="action-buttons">
+              <a href="/journals/edit/<%= journal._id %>" class="btn">Редактировать <span class="fas fa-chevron-right"></span></a>
+              <a href="/journals/delete/<%= journal._id %>" class="delete-icon"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    function filterJournals() {
+      const input = document.getElementById('search').value.toLowerCase();
+      const cards = document.querySelectorAll('.journal-card');
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        if (name.includes(input)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Врачи</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="shortcut icon" href="/images/heartbeat-solid.svg" type="image/x-icon"> 
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><i class="fas fa-heartbeat"></i> medcare</a>
+    <nav class="navbar">
+      <a href="/doctors">Врачи</a>
+      <a href="/patients">Пациенты</a>
+      <a href="/diseases">Болезни</a>
+      <a href="/journals">Журнал посещений</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </header>
+
+
+  <section>
+
+  <div class="add-mode">
+    <a href="/doctors/new" class="btn">Добавить врача <span class="fas fa-plus"></span></a>
+  </div>
+
+  <div class="content-center-wrapper">
+    <div class="section-header">
+        <div class="search-form">
+          <input type="text" id="search" list="doctorNames" placeholder="Поиск по имени" oninput="filterDoctors()">
+          <datalist id="doctorNames">
+            <% doctors.forEach(doctor => { %>
+              <option value="<%= doctor.name %>">
+            <% }) %>
+          </datalist>
+        </div>
+      </div>
+
+    <ul>
+      <% doctors.forEach(doctor => { %>
+         <li class="doctor-card" data-name="<%= doctor.name.toLowerCase() %>">
+          <h3 class="doctor-name">
+            <i class="fas fa-user-md icon"></i>
+            <span><%= doctor.name %></span>
+          </h3>
+          <p><strong>Специальность:</strong> <%= doctor.specialty %></p>
+          <p><strong>Телефон:</strong> <%= doctor.phone %></p>
+          <div class="action-buttons">
+            <a href="/doctors/edit/<%= doctor._id %>" class="btn">Редактировать <span class="fas fa-chevron-right"></span></a>
+            <a href="/doctors/delete/<%= doctor._id %>" class="delete-icon">
+              <i class="fas fa-trash-alt"></i>
+            </a>
+          </div>
+        </li>
+      <% }) %>
+    </ul>
+  </div>
+
+</section>
+
+<script>
+    function filterDoctors() {
+      const input = document.getElementById('search').value.toLowerCase();
+      const cards = document.querySelectorAll('.doctor-card');
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        if (name.includes(input)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

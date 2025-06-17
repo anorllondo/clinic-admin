@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>medcare</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="shortcut icon" href="/images/heartbeat-solid.svg" type="image/x-icon">
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><i class="fas fa-heartbeat"></i> medcare</a>
+    <nav class="navbar">
+      <a href="/doctors">Врачи</a>
+      <a href="/patients">Пациенты</a>
+      <a href="/diseases">Болезни</a>
+      <a href="/journals">Журнал посещений</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </header>
+
+  <div class="form-section">
+    <div class="form-wrapper">
+      <form class="form-container" action="<%= journal ? '/journals/update/' + journal._id : '/journals' %>" method="POST" novalidate>
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Пациент:</label>
+          <select name="patient_id" id="patient_id" required>
+            <option value="">Выберите пациента</option>
+            <% patients.forEach(patient => { %>
+              <option value="<%= patient._id %>" <%= journal && journal.patient_id && journal.patient_id._id.toString() === patient._id.toString() ? 'selected' : '' %>>
+                <%= patient.name %> (Возраст: <%= patient.age %>, Пол: <%= patient.gender %>)
+              </option>
+            <% }) %>
+          </select>
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-user-md"></i> Врач:</label>
+          <select name="doctor_id" id="doctor_id" required>
+            <option value="">Выберите врача</option>
+            <% doctors.forEach(doctor => { %>
+              <option value="<%= doctor._id %>" <%= journal && journal.doctor_id && journal.doctor_id._id.toString() === doctor._id.toString() ? 'selected' : '' %>>
+                <%= doctor.name %> (<%= doctor.specialty %>)
+              </option>
+            <% }) %>
+          </select>
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-stethoscope"></i> Диагноз:</label>
+          <select name="disease_id" id="disease_id" required>
+            <option value="">Выберите болезнь</option>
+            <% diseases.forEach(disease => { %>
+              <option value="<%= disease._id %>" <%= journal && journal.disease_id && journal.disease_id._id.toString() === disease._id.toString() ? 'selected' : '' %>>
+                <%= disease.name %> (Симптомы: <%= disease.symptoms.join(', ') %>)
+              </option>
+            <% }) %>
+          </select>
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-calendar"></i> Дата:</label>
+          <input type="date" name="date" id="date" value="<%= journal ? journal.date.toISOString().split('T')[0] : '' %>" required max="<%= new Date().toISOString().split('T')[0] %>" title="Дата не может быть позже сегодняшней">
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-sticky-note"></i> Заметки:</label>
+          <input type="text" name="notes" id="notes" value="<%= journal ? journal.notes : '' %>" required minlength="2" title="Заметки должны содержать минимум 2 символа">
+          <span class="error-message"></span>
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn">Сохранить <span class="fas fa-chevron-right"></span></button>
+          <a href="/journals" class="btn">Отмена <span class="fas fa-times"></span></a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+      let isValid = true;
+      form.querySelectorAll('.form-group').forEach(group => {
+        const input = group.querySelector('input, select');
+        const error = group.querySelector('.error-message');
+        error.textContent = '';
+
+        if (!input.validity.valid) {
+          isValid = false;
+          if (input.validity.valueMissing) {
+            error.textContent = 'Это поле обязательно';
+          } else if (input.validity.patternMismatch || input.validity.tooShort || input.validity.rangeOverflow) {
+            error.textContent = input.title;
+          }
+        }
+      });
+
+      if (!isValid) {
+        e.preventDefault();
+      }
+    });
+
+    form.querySelectorAll('input, select').forEach(input => {
+      input.addEventListener('input', () => {
+        const error = input.parentElement.querySelector('.error-message');
+        error.textContent = '';
+        if (!input.validity.valid) {
+          if (input.validity.valueMissing) {
+            error.textContent = 'Это поле обязательно';
+          } else if (input.validity.patternMismatch || input.validity.tooShort || input.validity.rangeOverflow) {
+            error.textContent = input.title;
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

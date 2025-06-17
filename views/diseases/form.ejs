@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>medcare.</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <link rel="shortcut icon" href="/images/heartbeat-solid.svg" type="image/x-icon"> 
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><i class="fas fa-heartbeat"></i> medcare.</a>
+    <nav class="navbar">
+      <a href="/doctors">Врачи</a>
+      <a href="/patients">Пациенты</a>
+      <a href="/diseases">Болезни</a>
+      <a href="/journals">Журнал посещений</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </header>
+
+  <div class="form-section">
+    <div class="form-wrapper">
+      <form class="form-container" action="<%= disease ? '/diseases/update/' + disease._id : '/diseases' %>" method="POST" novalidate>
+        <div class="form-group">
+          <label><i class="fas fa-disease"></i> Название:</label>
+          <input type="text" name="name" value="<%= disease ? disease.name : '' %>" required pattern="[A-Za-zА-Яа-яЁё\s\-]{2,}" title="Название должно содержать минимум 2 буквы или дефисы">
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-list"></i> Симптомы:</label>
+          <input type="text" name="symptoms" value="<%= disease ? disease.symptoms.join(', ') : '' %>" required title="Введите симптомы через запятую, минимум один">
+          <span class="error-message"></span>
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn">Сохранить <span class="fas fa-chevron-right"></span></button>
+          <a href="/diseases" class="btn">Отмена <span class="fas fa-times"></span></a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+      let isValid = true;
+      form.querySelectorAll('.form-group').forEach(group => {
+        const input = group.querySelector('input');
+        const error = group.querySelector('.error-message');
+        error.textContent = '';
+
+        if (!input.validity.valid) {
+          isValid = false;
+          if (input.validity.valueMissing) {
+            error.textContent = 'Это поле обязательно';
+          } else if (input.validity.patternMismatch) {
+            error.textContent = input.title;
+          }
+        }
+
+        if (input.name === 'symptoms') {
+          const symptoms = input.value.split(',').map(s => s.trim()).filter(s => s);
+          if (symptoms.length === 0) {
+            isValid = false;
+            error.textContent = 'Введите хотя бы один симптом';
+          } else if (new Set(symptoms).size !== symptoms.length) {
+            isValid = false;
+            error.textContent = 'Симптомы не должны повторяться';
+          }
+        }
+      });
+
+      if (!isValid) {
+        e.preventDefault();
+      }
+    });
+
+    form.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', () => {
+        const error = input.parentElement.querySelector('.error-message');
+        error.textContent = '';
+        if (!input.validity.valid) {
+          if (input.validity.valueMissing) {
+            error.textContent = 'Это поле обязательно';
+          } else if (input.validity.patternMismatch) {
+            error.textContent = input.title;
+          }
+        }
+        if (input.name === 'symptoms') {
+          const symptoms = input.value.split(',').map(s => s.trim()).filter(s => s);
+          if (symptoms.length === 0) {
+            error.textContent = 'Введите хотя бы один симптом';
+          } else if (new Set(symptoms).size !== symptoms.length) {
+            error.textContent = 'Симптомы не должны повторяться';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

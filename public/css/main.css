@@ -1,0 +1,488 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
+
+:root{
+    --green: #16a085; 
+    --black: #444; 
+    --light-color: #777; 
+    --box-shadow:.5rem .5rem 0 rgba(22, 160, 133, .2);
+    --text-shadow:.4rem .4rem 0 rgba(0, 0, 0, .2);
+    --border: .2rem solid var(--green);
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    outline: none; border: none;
+    text-transform: capitalize;
+    text-decoration: none;
+    transition: all .2s ease-out;
+}
+html{
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-padding-top: 7rem;
+    scroll-behavior: smooth;
+}
+section{
+    padding: 7rem 9% 2rem;
+}
+section:nth-child(even){
+    background: #f5f5f5;
+}
+.heading{
+    text-align: center;
+    padding-bottom: 2rem;
+    text-shadow: var(--text-shadow);
+    text-transform: uppercase; 
+    color: var(--black);
+    font-size: 5rem;
+    letter-spacing: .4rem;
+}
+.heading span{
+    text-transform: uppercase; 
+    color: var(--green);
+}
+.btn{
+    display: inline-block;
+    margin-top: 1rem;
+    padding: .5rem;
+    padding-left: 1rem;
+    border: var(--border);
+    border-radius: .5rem;
+    box-shadow: var(--box-shadow);
+    color: var(--green);
+    cursor: pointer;
+    font-size: 1.7rem;
+    background: #fff;
+}
+.btn span{
+    padding: .7rem 1rem;
+    border-radius: .5rem;
+    background: var(--green);
+    color: #ffffff;
+    margin-left: .5rem;
+}
+.btn:hover{
+    background: var(--green);
+    color: #ffffff;
+}
+.btn:hover span{
+    color: var(--green);
+    background: #fff;
+    margin-left: 1rem;
+}
+/* Header Section Starts */
+.header{
+    padding: 2rem 9%;
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    box-shadow: 0 .5rem 1.5rem rgba(0, 0, 0, .1);
+    display: flex;
+    align-items: center; 
+    justify-content: space-between;
+    background: #fff;
+}
+.header .logo{
+    font-size: 2.5rem;
+    color: var(--black);
+}
+.header .logo i{
+    color: var(--green);
+}
+.header .navbar a{
+    font-size: 1.7rem;
+    color: var(--light-color);
+    margin-left: 2rem;
+}
+.header .navbar a:hover{
+    color: var(--green);
+}
+#menu-btn{
+    font-size: 2.5rem;
+    border-radius: .5rem;
+    background: #eee;
+    color:var(--green);
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    display: none;
+}
+/* Header Section End */
+
+/* Home Section starts */
+.home{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-top: 10rem;
+}
+.home .image{
+    flex: 1 1 45rem;
+}
+.home .image img{
+    width: 100%;
+}
+.home .content{
+    flex: 1 1 45rem;
+}
+.home .content h3 {
+    font-size: 4.5rem;
+    color: var(--black);
+    line-height: 1.8;
+    text-shadow: var(--text-shadow);
+}
+.home .content p{
+    font-size:1.7rem;
+    color: var(--light-color);
+    line-height: 1.8;
+    padding: 1rem 0;
+}
+/* Home Section End */
+
+.section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  margin-top: 10rem;
+  gap: 6rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 4.5rem;
+  color: var(--black);
+  line-height: 1.8;
+  text-shadow: var(--text-shadow);
+}
+
+.section-header input[type="text"] {
+  padding: 6px 12px;
+  font-size: 1.3em;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  min-width: 600px;
+  max-width: 100%;
+  margin-bottom: 2rem;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.delete-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4.5rem;
+  height: 4.5rem;
+  border: 1px solid;
+  border-color: #16a085;
+  border-radius: .3rem;
+  color: var(--light-color);
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background-color .2s;
+  font-size: 1.4rem;
+  color: #16a085;
+  box-shadow: var(--box-shadow);
+  margin-top: 1rem;
+  margin-left: 0.8rem;
+}
+.delete-icon:hover {
+  color: #e74c3c;
+  border-color: #e74c3c;
+  background-color: rgba(231, 76, 60, .1);
+}
+
+/* Стили для списка */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* Каждый элемент */
+ul li {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 .4rem 1.2rem rgba(0, 0, 0, 0.06);
+  font-size: 1.6rem;
+  color: var(--black);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+ul li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 .6rem 1.6rem rgba(0, 0, 0, 0.1);
+}
+
+/* Имя и данные */
+ul li::before {
+  content: "";
+  font-size: 2rem;
+  margin-right: 1rem;
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+}
+
+/* Чтобы текст не залезал под иконку */
+ul li > span,
+ul li > div:not(.action-buttons) {
+  padding-left: 3rem;
+}
+
+/* Doctor Card */
+.doctor-card {
+  background: #fff;
+  border: var(--border);
+  border-radius: 1rem;
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.doctor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+}
+.doctor-name {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  color: var(--green);
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+.doctor-name .icon {
+  font-size: 2.4rem;
+  color: var(--green);
+}
+
+/* Patient Card */
+.patient-card {
+  background: #fff;
+  border: var(--border);
+  border-radius: 1rem;
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.patient-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+}
+.patient-name {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  color: var(--green);
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+.patient-name .icon {
+  font-size: 2.4rem;
+  color: var(--green);
+}
+
+/* Disease Card */
+.disease-card {
+  background: #fff;
+  border: var(--border);
+  border-radius: 1rem;
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.disease-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+}
+.disease-name {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  color: var(--green);
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+.disease-name .icon {
+  font-size: 2.4rem;
+  color: var(--green);
+}
+
+/* Journal Card */
+.journal-card {
+  background: #fff;
+  border: var(--border);
+  border-radius: 1rem;
+  box-shadow: var(--box-shadow);
+  padding: 2rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.journal-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
+}
+.journal-name {
+  display: flex;
+  align-items: center;
+  font-size: 2.2rem;
+  color: var(--green);
+  margin-bottom: 1rem;
+  gap: 1rem;
+}
+.journal-name .icon {
+  font-size: 2.4rem;
+  color: var(--green);
+}
+
+.doctor-card p,
+.patient-card p,
+.disease-card p,
+.journal-card p {
+  font-size: 1.5rem;
+  color: var(--black);
+  margin-bottom: 0.8rem;
+}
+
+.doctor-card p strong,
+.patient-card p strong,
+.disease-card p strong,
+.journal-card p strong {
+  color: var(--light-color);
+  margin-right: 0.4rem;
+}
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+/* Стиль поля поиска */
+.search-form {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-form input[type="text"] {
+  padding: 1rem 1.5rem;
+  font-size: 1.6rem;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  min-width: 600px;
+  height: 4.4rem;
+  box-sizing: border-box;
+}
+
+/* Убираем большой отступ сверху у формы */
+.form-container {
+  max-width: 600px;
+  margin: 0;
+  background: #fff;
+  padding: 3rem 4rem;
+  border-radius: 1rem;
+  box-shadow: var(--box-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Новый контейнер для центровки */
+.form-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding-top: 8rem;
+  box-sizing: border-box;
+}
+
+/* Обертка для формы для точной центровки */
+.form-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 1.5rem;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-group input {
+  font-size: 1.6rem;
+  padding: 1rem 1.2rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+  border-color: var(--green);
+  outline: none;
+}
+
+.form-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: flex-start;
+}
+
+/* Контейнер для центрирования основного контента */
+.content-center-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 7rem);
+  padding: 2rem 0;
+  box-sizing: border-box;
+}
+
+/* Кнопка остаётся справа сверху */
+.add-mode {
+  position: fixed;
+  top: 11rem;
+  right: 7rem;
+  z-index: 1001;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Чтобы список занимал контентную ширину, а не растягивался */
+.content-center-wrapper ul {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}

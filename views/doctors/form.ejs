@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>medcare.</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+   <link rel="shortcut icon" href="/images/heartbeat-solid.svg" type="image/x-icon"> 
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><i class="fas fa-heartbeat"></i> medcare.</a>
+    <nav class="navbar">
+      <a href="/doctors">Врачи</a>
+      <a href="/patients">Пациенты</a>
+      <a href="/diseases">Болезни</a>
+      <a href="/journals">Журнал посещений</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </header>
+
+  <div class="form-section">
+    <div class="form-wrapper">
+      <form class="form-container" action="<%= doctor ? '/doctors/update/' + doctor._id : '/doctors' %>" method="POST" novalidate>
+        <div class="form-group">
+          <label><i class="fas fa-user"></i> Имя:</label>
+          <input type="text" name="name" value="<%= doctor ? doctor.name : '' %>" required pattern="[A-Za-zА-Яа-яЁё\s]{2,}" title="Имя должно содержать минимум 2 буквы">
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-briefcase-medical"></i> Специальность:</label>
+          <input type="text" name="specialty" value="<%= doctor ? doctor.specialty : '' %>" required pattern="[A-Za-zА-Яа-яЁё\s]{2,}" title="Специальность должна содержать минимум 2 буквы">
+          <span class="error-message"></span>
+        </div>
+        <div class="form-group">
+          <label><i class="fas fa-phone"></i> Телефон:</label>
+          <input type="tel" name="phone" value="<%= doctor ? doctor.phone : '' %>" required pattern="(\+7|8)[0-9]{10}" title="Формат: +7XXXXXXXXXX или 8XXXXXXXXXX">
+          <span class="error-message"></span>
+        </div>
+        <div class="form-buttons">
+          <button type="submit" class="btn">Сохранить <span class="fas fa-chevron-right"></span></button>
+          <a href="/doctors" class="btn">Отмена <span class="fas fa-times"></span></a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', (e) => {
+      let isValid = true;
+      form.querySelectorAll('.form-group').forEach(group => {
+        const input = group.querySelector('input');
+        const error = group.querySelector('.error-message');
+        error.textContent = '';
+
+        if (!input.validity.valid) {
+          isValid = false;
+          if (input.validity.valueMissing) {
+            error.textContent = 'Это поле обязательно';
+          } else if (input.validity.patternMismatch) {
+            error.textContent = input.title;
+          }
+        }
+      });
+
+      if (!isValid) {
+        e.preventDefault();
+      }
+    });
+
+    form.querySelectorAll('input').forEach(input => {
+      input.addEventListener('input', () => {
+        const error = input.parentElement.querySelector('.error-message');
+        error.textContent = '';
+        if (!input.validity.valid) {
+          if (input.validity.valueMissing) {
+            error.textContent = 'Это поле обязательно';
+          } else if (input.validity.patternMismatch) {
+            error.textContent = input.title;
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

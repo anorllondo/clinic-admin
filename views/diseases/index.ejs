@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>medcare</title>
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="shortcut icon" href="/images/heartbeat-solid.svg" type="image/x-icon"> 
+</head>
+<body>
+  <header class="header">
+    <a href="/" class="logo"><i class="fas fa-heartbeat"></i> medcare.</a>
+    <nav class="navbar">
+      <a href="/doctors">Врачи</a>
+      <a href="/patients">Пациенты</a>
+      <a href="/diseases">Болезни</a>
+      <a href="/journals">Журнал посещений</a>
+    </nav>
+    <div id="menu-btn" class="fas fa-bars"></div>
+  </header>
+
+    <section>
+
+      <div class="add-mode">
+        <a href="/diseases/new" class="btn">Добавить болезнь <span class="fas fa-plus"></span></a>
+      </div>
+
+       <div class="content-center-wrapper">
+      <div class="section-header">
+        <div class="search-form">
+          <input type="text" id="search" list="diseaseNames" placeholder="Поиск по названию" oninput="filterDiseases()">
+          <datalist id="diseaseNames">
+            <% diseases.forEach(disease => { %>
+              <option value="<%= disease.name %>">
+            <% }) %>
+          </datalist>
+        </div>
+      </div>
+
+      
+
+      <ul>
+        <% diseases.forEach(disease => { %>
+          <li class="disease-card" data-name="<%= disease.name.toLowerCase() %>">
+            <div class="disease-name">
+              <i class="fas fa-disease icon"></i>
+              <%= disease.name %>
+            </div>
+            <p><strong>Симптомы:</strong> <%= disease.symptoms.join(', ') %></p>
+            <div class="action-buttons">
+              <a href="/diseases/edit/<%= disease._id %>" class="btn">Редактировать <span class="fas fa-chevron-right"></span></a>
+              <a href="/diseases/delete/<%= disease._id %>" class="delete-icon"><i class="fas fa-trash"></i></a>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    </section>
+  </div>
+
+  <script>
+    function filterDiseases() {
+      const input = document.getElementById('search').value.toLowerCase();
+      const cards = document.querySelectorAll('.disease-card');
+      cards.forEach(card => {
+        const name = card.getAttribute('data-name');
+        if (name.includes(input)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
